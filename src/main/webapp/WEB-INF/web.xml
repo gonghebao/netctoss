@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5">
+  <display-name>netctoss</display-name>
+  <welcome-file-list>
+    <welcome-file>index.html</welcome-file>
+    <welcome-file>index.htm</welcome-file>
+    <welcome-file>index.jsp</welcome-file>
+    <welcome-file>default.html</welcome-file>
+    <welcome-file>default.htm</welcome-file>
+    <welcome-file>default.jsp</welcome-file>
+  </welcome-file-list>
+  <servlet>
+  	<servlet-name>main</servlet-name>
+  	<servlet-class>web.MainServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>main</servlet-name>
+  	<url-pattern>*.do</url-pattern>
+  </servlet-mapping>
+  <!-- 配置错误页面:
+  	   tomcat在调用Servlet时,会尝试捕获异常,
+  	   当捕获到所配置的异常时,将自动转发到对应的
+  	   错误页面。由于转发只局限在项目内部资源，
+  	   所以服务器会在路径前追加项目名.
+   -->
+  <error-page>
+  	<exception-type>java.lang.Exception</exception-type>
+  	<location>/WEB-INF/error.jsp</location>
+  </error-page>
+  <!-- 登录检查过滤器 -->
+  <filter>
+  	<filter-name>login</filter-name>
+  	<filter-class>web.LoginFilter</filter-class>
+  	<init-param>
+  		<param-name>excludePath</param-name>
+  		<param-value>/tologin.do,/createimg.do,/login.do</param-value>
+  	</init-param>
+  </filter>
+  <filter-mapping>
+  	<filter-name>login</filter-name>
+  	<url-pattern>*.do</url-pattern>
+  </filter-mapping>
+  <session-config>
+	<session-timeout>1</session-timeout>
+</session-config>
+</web-app>
